@@ -1,0 +1,1 @@
+{"description": "Start a zone for a set number of seconds.", "fields": {"zone_id": {"description": "The zone to start.", "example": 3}, "zone_run_time": {"description": "The number of seconds to run the zone.", "example": 120}}}

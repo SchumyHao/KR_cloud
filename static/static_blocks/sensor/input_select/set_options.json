@@ -1,0 +1,1 @@
+{"description": "Set the options of an input select entity.", "fields": {"entity_id": {"description": "Entity id of the input select to set the new options for.", "example": "input_select.my_select"}, "options": {"description": "Options for the input select entity.", "example": "[\"Item A\", \"Item B\", \"Item C\"]"}}}

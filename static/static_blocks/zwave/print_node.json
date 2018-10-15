@@ -1,0 +1,1 @@
+{"description": "Print all information about z-wave node.", "fields": {"node_id": {"description": "Node id of the device to print."}}}

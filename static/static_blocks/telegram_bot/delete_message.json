@@ -1,0 +1,1 @@
+{"description": "Delete a previously sent message.", "fields": {"message_id": {"description": "id of the message to delete.", "example": "{{ trigger.event.data.message.message_id }}"}, "chat_id": {"description": "The chat_id where to delete the message.", "example": 12345}}}

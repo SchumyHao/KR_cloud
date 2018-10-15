@@ -1,0 +1,1 @@
+{"description": "Change sound setting.", "fields": {"entity_id": {"description": "Target device.", "example": "media_player.my_soundbar"}, "name": {"description": "Name of the setting.", "example": "nightMode"}, "value": {"description": "Value to set.", "example": "on"}}}

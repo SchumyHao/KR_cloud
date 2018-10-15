@@ -1,0 +1,1 @@
+{"description": "Select HDMI device.", "fields": {"device": {"description": "Address of device to select. Can be entity_id, physical address or alias from confuguration.", "example": "\"switch.hdmi_1\" or \"1.1.0.0\" or \"01:10\""}}}

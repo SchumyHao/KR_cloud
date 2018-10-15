@@ -1,0 +1,1 @@
+{"description": "Group player together.", "fields": {"master": {"description": "Entity ID of the player that should become the coordinator of the group.", "example": "media_player.living_room_sonos"}, "entity_id": {"description": "Name(s) of entities that will coordinate the grouping. Platform dependent.", "example": "media_player.living_room_sonos"}}}

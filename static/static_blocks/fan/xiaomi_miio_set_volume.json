@@ -1,0 +1,1 @@
+{"description": "Set the sound volume.", "fields": {"entity_id": {"description": "Name of the xiaomi miio entity.", "example": "fan.xiaomi_miio_device"}, "volume": {"description": "Volume, between 0 and 100.", "example": 50}}}

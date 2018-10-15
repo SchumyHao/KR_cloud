@@ -1,0 +1,1 @@
+{"description": "Set alarm sensitivity for all or specified locks.", "fields": {"entity_id": {"description": "Name of lock to unlock.", "example": "lock.front_door"}, "sensitivity": {"description": "One of low, medium_low, medium, medium_high, high.", "example": "medium"}}}

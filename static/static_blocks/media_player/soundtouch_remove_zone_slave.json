@@ -1,0 +1,1 @@
+{"description": "Remove a slave from the Sounttouch multi-room zone.", "fields": {"master": {"description": "Name of the master entity that is coordinating the multi-room zone. Platform dependent.", "example": "media_player.soundtouch_home"}, "slaves": {"description": "Name of slaves entities to remove from the existing zone.", "example": "media_player.soundtouch_bedroom"}}}

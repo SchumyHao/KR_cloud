@@ -1,0 +1,1 @@
+{"description": "Set a theme unless the client selected per-device theme.", "fields": {"name": {"description": "Name of a predefined theme or 'default'.", "example": "light"}}}

@@ -1,0 +1,1 @@
+{"description": "Start remote control of the vacuum cleaner. You can then move it with `remote_control_move`, when done call `remote_control_stop`.", "fields": {"entity_id": {"description": "Name of the vacuum entity.", "example": "vacuum.xiaomi_vacuum_cleaner"}}}

@@ -1,0 +1,1 @@
+{"description": "This will send test messages to a node in the Z-Wave network. This could bring back dead nodes.", "fields": {"node_id": {"description": "ID of the node to send test messages to.", "example": 10}, "messages": {"description": "Optional. Amount of test messages to send.", "example": 3}}}

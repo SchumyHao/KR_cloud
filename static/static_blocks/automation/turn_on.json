@@ -1,0 +1,1 @@
+{"description": "Enable an automation.", "fields": {"entity_id": {"description": "Name of the automation to turn on.", "example": "automation.notify_home"}}}

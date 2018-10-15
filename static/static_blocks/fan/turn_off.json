@@ -1,0 +1,1 @@
+{"description": "Turns fan off.", "fields": {"entity_id": {"description": "Names(s) of the entities to turn off", "example": "fan.living_room"}}}

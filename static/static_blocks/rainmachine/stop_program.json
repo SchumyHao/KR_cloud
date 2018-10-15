@@ -1,0 +1,1 @@
+{"description": "Stop a program.", "fields": {"program_id": {"description": "The program to stop.", "example": 3}}}

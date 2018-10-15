@@ -1,0 +1,1 @@
+{"description": "Select the previous options of an input select entity.", "fields": {"entity_id": {"description": "Entity id of the input select to select the previous value for.", "example": "input_select.my_select"}}}

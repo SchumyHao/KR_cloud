@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kr.dao.ApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.kr.domain.Application" >
+    <id column="appid" property="appid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="appcontent" property="appcontent" jdbcType="VARCHAR" />
+    <result column="appname" property="appname" jdbcType="VARCHAR" />
+    <result column="appdescribtion" property="appdescribtion" jdbcType="VARCHAR" />
+    <result column="appauthor" property="appauthor" jdbcType="VARCHAR" />
+    <result column="appauthoremails" property="appauthoremails" jdbcType="VARCHAR" />
+    <result column="appauthorimg" property="appauthorimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.kr.domain.Application" extends="BaseResultMap" >
+    <result column="appimg" property="appimg" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    appid, userid, appcontent, appname, appdescribtion, appauthor, appauthoremails, appauthorimg
+  </sql>
+  <sql id="Blob_Column_List" >
+    appimg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from application
+    where appid = #{appid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserid" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from application
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from application
+    where appname = #{appname,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from application
+    where appid = #{appid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kr.domain.Application" >
+    insert into application (appid, userid, appcontent, 
+      appname, appdescribtion, appauthor, 
+      appauthoremails, appauthorimg, appimg
+      )
+    values (#{appid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{appcontent,jdbcType=VARCHAR}, 
+      #{appname,jdbcType=VARCHAR}, #{appdescribtion,jdbcType=VARCHAR}, #{appauthor,jdbcType=VARCHAR}, 
+      #{appauthoremails,jdbcType=VARCHAR}, #{appauthorimg,jdbcType=VARCHAR}, #{appimg,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kr.domain.Application" >
+    insert into application
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="appcontent != null" >
+        appcontent,
+      </if>
+      <if test="appname != null" >
+        appname,
+      </if>
+      <if test="appdescribtion != null" >
+        appdescribtion,
+      </if>
+      <if test="appauthor != null" >
+        appauthor,
+      </if>
+      <if test="appauthoremails != null" >
+        appauthoremails,
+      </if>
+      <if test="appauthorimg != null" >
+        appauthorimg,
+      </if>
+      <if test="appimg != null" >
+        appimg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appid != null" >
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="appcontent != null" >
+        #{appcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="appname != null" >
+        #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="appdescribtion != null" >
+        #{appdescribtion,jdbcType=VARCHAR},
+      </if>
+      <if test="appauthor != null" >
+        #{appauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="appauthoremails != null" >
+        #{appauthoremails,jdbcType=VARCHAR},
+      </if>
+      <if test="appauthorimg != null" >
+        #{appauthorimg,jdbcType=VARCHAR},
+      </if>
+      <if test="appimg != null" >
+        #{appimg,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kr.domain.Application" >
+    update application
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="appcontent != null" >
+        appcontent = #{appcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="appname != null" >
+        appname = #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="appdescribtion != null" >
+        appdescribtion = #{appdescribtion,jdbcType=VARCHAR},
+      </if>
+      <if test="appauthor != null" >
+        appauthor = #{appauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="appauthoremails != null" >
+        appauthoremails = #{appauthoremails,jdbcType=VARCHAR},
+      </if>
+      <if test="appauthorimg != null" >
+        appauthorimg = #{appauthorimg,jdbcType=VARCHAR},
+      </if>
+      <if test="appimg != null" >
+        appimg = #{appimg,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where appid = #{appid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kr.domain.Application" >
+    update application
+    set userid = #{userid,jdbcType=INTEGER},
+      appcontent = #{appcontent,jdbcType=VARCHAR},
+      appname = #{appname,jdbcType=VARCHAR},
+      appdescribtion = #{appdescribtion,jdbcType=VARCHAR},
+      appauthor = #{appauthor,jdbcType=VARCHAR},
+      appauthoremails = #{appauthoremails,jdbcType=VARCHAR},
+      appauthorimg = #{appauthorimg,jdbcType=VARCHAR},
+      appimg = #{appimg,jdbcType=LONGVARBINARY}
+    where appid = #{appid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kr.domain.Application" >
+    update application
+    set userid = #{userid,jdbcType=INTEGER},
+      appcontent = #{appcontent,jdbcType=VARCHAR},
+      appname = #{appname,jdbcType=VARCHAR},
+      appdescribtion = #{appdescribtion,jdbcType=VARCHAR},
+      appauthor = #{appauthor,jdbcType=VARCHAR},
+      appauthoremails = #{appauthoremails,jdbcType=VARCHAR},
+      appauthorimg = #{appauthorimg,jdbcType=VARCHAR}
+    where appid = #{appid,jdbcType=INTEGER}
+  </update>
+</mapper>

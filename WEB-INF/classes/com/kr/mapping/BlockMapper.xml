@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kr.dao.BlockMapper" >
+  <resultMap id="BaseResultMap" type="com.kr.domain.Block" >
+    <id column="blockId" property="blockid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.kr.domain.Block" extends="BaseResultMap" >
+    <result column="blockContent" property="blockcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    blockId
+  </sql>
+  <sql id="Blob_Column_List" >
+    blockContent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from block
+    where blockId = #{blockid,jdbcType=INTEGER}
+  </select>
+  <select id="selectLength" resultType="java.lang.Integer"  >
+    select 
+    count(1)
+    from block
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from block
+    where blockId = #{blockid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kr.domain.Block" >
+    insert into block (blockId, blockContent)
+    values (#{blockid,jdbcType=INTEGER}, #{blockcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kr.domain.Block" >
+    insert into block
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blockid != null" >
+        blockId,
+      </if>
+      <if test="blockcontent != null" >
+        blockContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blockid != null" >
+        #{blockid,jdbcType=INTEGER},
+      </if>
+      <if test="blockcontent != null" >
+        #{blockcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kr.domain.Block" >
+    update block
+    <set >
+      <if test="blockcontent != null" >
+        blockContent = #{blockcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where blockId = #{blockid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kr.domain.Block" >
+    update block
+    set blockContent = #{blockcontent,jdbcType=LONGVARCHAR}
+    where blockId = #{blockid,jdbcType=INTEGER}
+  </update>
+</mapper>

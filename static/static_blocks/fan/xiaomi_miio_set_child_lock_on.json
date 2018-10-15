@@ -1,0 +1,1 @@
+{"description": "Turn the child lock on.", "fields": {"entity_id": {"description": "Name of the xiaomi miio entity.", "example": "fan.xiaomi_miio_device"}}}

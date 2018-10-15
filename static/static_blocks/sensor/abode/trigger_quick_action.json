@@ -1,0 +1,1 @@
+{"description": "Trigger an Abode quick action.", "fields": {"entity_id": {"description": "Entity id of the quick action to trigger.", "example": "binary_sensor.home_quick_action"}}}

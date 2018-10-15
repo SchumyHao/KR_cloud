@@ -1,0 +1,1 @@
+{"description": "Play on all Bose Soundtouch devices.", "fields": {"master": {"description": "Name of the master entity that will coordinate the grouping. Platform dependent. It is a shortcut for creating a multi-room zone with all devices", "example": "media_player.soundtouch_home"}}}

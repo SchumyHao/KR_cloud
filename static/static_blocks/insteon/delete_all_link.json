@@ -1,0 +1,1 @@
+{"description": "Tells the Insteon Modem (IM) to remove an All-Link record from the All-Link Database of the IM and a device. Once the IM is set to delete the link, press the link button on the corresponding device to complete the process.", "fields": {"group": {"description": "All-Link group number.", "example": 1}}}

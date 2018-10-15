@@ -1,0 +1,1 @@
+{"description": "Send the alarm the command for arm night.", "fields": {"entity_id": {"description": "Name of alarm control panel to arm night.", "example": "alarm_control_panel.downstairs"}, "code": {"description": "An optional code to arm night the alarm control panel with.", "example": 1234}}}

@@ -1,0 +1,1 @@
+{"description": "Set Sonos sound options.", "fields": {"entity_id": {"description": "Name(s) of entities that will have options set.", "example": "media_player.living_room_sonos"}, "night_sound": {"description": "Enable Night Sound mode", "example": "true"}, "speech_enhance": {"description": "Enable Speech Enhancement mode", "example": "true"}}}

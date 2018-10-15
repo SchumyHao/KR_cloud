@@ -1,0 +1,1 @@
+{"description": "Send the alarm the command for trigger.", "fields": {"entity_id": {"description": "Name of alarm control panel to trigger.", "example": "alarm_control_panel.downstairs"}, "code": {"description": "An optional code to trigger the alarm control panel with.", "example": 1234}}}

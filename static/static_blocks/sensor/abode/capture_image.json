@@ -1,0 +1,1 @@
+{"description": "Request a new image capture from a camera device.", "fields": {"entity_id": {"description": "Entity id of the camera to request an image.", "example": "camera.downstairs_motion_camera"}}}

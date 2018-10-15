@@ -1,0 +1,1 @@
+{"description": "Launch a conversation from a transcribed text.", "fields": {"text": {"description": "Transcribed text", "example": "Turn all lights on"}}}

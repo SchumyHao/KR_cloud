@@ -1,0 +1,1 @@
+{"description": "Generic service to turn devices off under any domain. Same usage as the light.turn_on, switch.turn_on, etc. services.", "fields": {"entity_id": {"description": "The entity_id of the device to turn off.", "example": "light.living_room"}}}

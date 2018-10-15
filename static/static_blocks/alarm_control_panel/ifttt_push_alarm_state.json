@@ -1,0 +1,1 @@
+{"description": "Update the alarm state to the specified value.", "fields": {"entity_id": {"description": "Name of the alarm control panel which state has to be updated.", "example": "alarm_control_panel.downstairs"}, "state": {"description": "The state to which the alarm control panel has to be set.", "example": "armed_night"}}}

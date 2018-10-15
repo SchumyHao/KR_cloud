@@ -1,0 +1,1 @@
+{"description": "Locate the vacuum cleaner robot.", "fields": {"entity_id": {"description": "Name of the vacuum entity.", "example": "vacuum.xiaomi_vacuum_cleaner"}}}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kr.dao.hassMapper" >
+  <resultMap id="BaseResultMap" type="com.kr.domain.hass" >
+    <id column="hassid" property="hassid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="hassname" property="hassname" jdbcType="VARCHAR" />
+    <result column="hasspassword" property="hasspassword" jdbcType="VARCHAR" />
+    <result column="hassip" property="hassip" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    hassid, userid, hassname, hasspassword, hassip
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hass
+    where hassid = #{hassid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hass
+    where hassid = #{hassid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kr.domain.hass" >
+    insert into hass (hassid, userid, hassname, 
+      hasspassword, hassip)
+    values (#{hassid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{hassname,jdbcType=VARCHAR}, 
+      #{hasspassword,jdbcType=VARCHAR}, #{hassip,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kr.domain.hass" >
+    insert into hass
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hassid != null" >
+        hassid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="hassname != null" >
+        hassname,
+      </if>
+      <if test="hasspassword != null" >
+        hasspassword,
+      </if>
+      <if test="hassip != null" >
+        hassip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hassid != null" >
+        #{hassid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="hassname != null" >
+        #{hassname,jdbcType=VARCHAR},
+      </if>
+      <if test="hasspassword != null" >
+        #{hasspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="hassip != null" >
+        #{hassip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kr.domain.hass" >
+    update hass
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="hassname != null" >
+        hassname = #{hassname,jdbcType=VARCHAR},
+      </if>
+      <if test="hasspassword != null" >
+        hasspassword = #{hasspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="hassip != null" >
+        hassip = #{hassip,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hassid = #{hassid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kr.domain.hass" >
+    update hass
+    set userid = #{userid,jdbcType=INTEGER},
+      hassname = #{hassname,jdbcType=VARCHAR},
+      hasspassword = #{hasspassword,jdbcType=VARCHAR},
+      hassip = #{hassip,jdbcType=VARCHAR}
+    where hassid = #{hassid,jdbcType=INTEGER}
+  </update>
+</mapper>

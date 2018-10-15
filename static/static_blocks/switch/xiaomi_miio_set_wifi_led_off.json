@@ -1,0 +1,1 @@
+{"description": "Turn the wifi led off.", "fields": {"entity_id": {"description": "Name of the xiaomi miio entity.", "example": "switch.xiaomi_miio_device"}}}

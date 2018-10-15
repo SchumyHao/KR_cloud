@@ -1,0 +1,1 @@
+{"description": "Send the media player the stop command.", "fields": {"entity_id": {"description": "Name(s) of entities to stop on.", "example": "media_player.living_room_sonos"}}}

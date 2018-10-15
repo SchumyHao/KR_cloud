@@ -1,0 +1,1 @@
+{"description": "Set the fan in night mode.", "fields": {"entity_id": {"description": "Name(s) of the entities to enable/disable night mode", "example": "fan.living_room"}, "night_mode": {"description": "Night mode status", "example": true}}}

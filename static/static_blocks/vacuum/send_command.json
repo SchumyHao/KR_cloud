@@ -1,0 +1,1 @@
+{"description": "Send a raw command to the vacuum cleaner.", "fields": {"entity_id": {"description": "Name of the vacuum entity.", "example": "vacuum.xiaomi_vacuum_cleaner"}, "command": {"description": "Command to execute.", "example": "set_dnd_timer"}, "params": {"description": "Parameters for the command.", "example": "{ \"key\": \"value\" }"}}}

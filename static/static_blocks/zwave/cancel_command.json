@@ -1,0 +1,1 @@
+{"description": "Cancel a running Z-Wave controller command. Use this to exit add_node, if you weren't going to use it but activated it."}

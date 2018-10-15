@@ -1,0 +1,1 @@
+{"description": "Set a usercode to lock.", "fields": {"node_id": {"description": "Node id of the lock.", "example": 18}, "code_slot": {"description": "Code slot to set the code.", "example": 1}, "usercode": {"description": "Code to set.", "example": 1234}}}

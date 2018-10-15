@@ -1,0 +1,1 @@
+{"description": "Train a person group.", "fields": {"group": {"description": "Name of the group", "example": "family"}}}

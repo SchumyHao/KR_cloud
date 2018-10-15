@@ -1,0 +1,1 @@
+{"description": "Removes a specific device. The removal is required if a device shall be paired with another gateway.", "fields": {"gw_mac": {"description": "MAC address of the Xiaomi Aqara Gateway.", "example": "34ce00880088"}, "device_id": {"description": "Hardware address of the device to remove.", "example": "158d0000000000"}}}

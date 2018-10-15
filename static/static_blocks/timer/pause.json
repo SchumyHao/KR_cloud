@@ -1,0 +1,1 @@
+{"description": "Pause a timer.", "fields": {"entity_id": {"description": "Entity id of the timer to pause. [optional]", "example": "timer.timer0"}}}

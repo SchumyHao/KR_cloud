@@ -1,0 +1,1 @@
+{"description": "Replace a failed node with another. If the node is not in the controller's failed nodes list, or the node responds, this command will fail. Refer to OZW.log for progress.", "fields": {"node_id": {"description": "Node id of the device to replace (integer).", "example": 10}}}

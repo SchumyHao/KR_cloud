@@ -1,0 +1,1 @@
+{"description": "Finish a timer.", "fields": {"entity_id": {"description": "Entity id of the timer to finish. [optional]", "example": "timer.timer0"}}}

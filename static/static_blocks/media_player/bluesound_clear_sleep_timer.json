@@ -1,0 +1,1 @@
+{"description": "Clear a Bluesound timer.", "fields": {"entity_id": {"description": "Name(s) of entities that will have the timer cleared.", "example": "media_player.bluesound_livingroom"}}}

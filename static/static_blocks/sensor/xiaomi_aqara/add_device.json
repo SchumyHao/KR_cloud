@@ -1,0 +1,1 @@
+{"description": "Enables the join permission of the Xiaomi Aqara Gateway for 30 seconds. A new device can be added afterwards by pressing the pairing button once.", "fields": {"gw_mac": {"description": "MAC address of the Xiaomi Aqara Gateway.", "example": "34ce00880088"}}}

@@ -1,0 +1,1 @@
+{"description": "Fetch the last state of the vehicles of all your accounts from the BMW server. This does *not* trigger an update from the vehicle, it just gets the data from the BMW servers. This service does not require any attributes.\n"}

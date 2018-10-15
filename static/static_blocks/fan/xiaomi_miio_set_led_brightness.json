@@ -1,0 +1,1 @@
+{"description": "Set the led brightness.", "fields": {"entity_id": {"description": "Name of the xiaomi miio entity.", "example": "fan.xiaomi_miio_device"}, "brightness": {"description": "Brightness (0 = Bright, 1 = Dim, 2 = Off)", "example": 1}}}

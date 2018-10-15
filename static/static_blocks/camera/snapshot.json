@@ -1,0 +1,1 @@
+{"description": "Take a snapshot from a camera.", "fields": {"entity_id": {"description": "Name(s) of entities to create snapshots from.", "example": "camera.living_room_camera"}, "filename": {"description": "Template of a Filename. Variable is entity_id.", "example": "/tmp/snapshot_{{ entity_id }}"}}}

@@ -1,0 +1,1 @@
+{"description": "Set a Bluesound timer. It will increase timer in steps: 15, 30, 45, 60, 90, 0", "fields": {"entity_id": {"description": "Name(s) of entities that will have a timer set.", "example": "media_player.bluesound_livingroom"}}}

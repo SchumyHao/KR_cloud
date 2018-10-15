@@ -1,0 +1,1 @@
+{"description": "Add a slave to a Sountouch multi-room zone.", "fields": {"master": {"description": "Name of the master entity that is coordinating the multi-room zone. Platform dependent.", "example": "media_player.soundtouch_home"}, "slaves": {"description": "Name of slaves entities to add to the existing zone.", "example": "media_player.soundtouch_bedroom"}}}

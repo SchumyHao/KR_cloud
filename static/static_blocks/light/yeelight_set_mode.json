@@ -1,0 +1,1 @@
+{"description": "Set a operation mode.", "fields": {"entity_id": {"description": "Name of the light entity.", "example": "light.yeelight"}, "mode": {"description": "Operation mode. Valid values are 'last', 'normal', 'rgb', 'hsv', 'color_flow', 'moonlight'.", "example": "moonlight"}}}

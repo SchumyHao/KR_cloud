@@ -1,0 +1,1 @@
+{"description": "Set alarm mode for all or specified locks.", "fields": {"entity_id": {"description": "Name of lock to unlock.", "example": "lock.front_door"}, "mode": {"description": "One of tamper, activity, or forced_entry.", "example": "tamper"}}}

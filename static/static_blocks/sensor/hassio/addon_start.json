@@ -1,0 +1,1 @@
+{"description": "Start a HassIO docker addon.", "fields": {"addon": {"description": "Name of addon.", "example": "smb_config"}}}

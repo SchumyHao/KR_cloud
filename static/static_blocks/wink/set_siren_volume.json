@@ -1,0 +1,1 @@
+{"description": "Set the volume of the siren for a Dome siren/chime.", "fields": {"entity_id": {"description": "Name(s) of the entities to set.", "example": "switch.dome_siren"}, "volume": {"description": "Volume level. One of [\"low\", \"medium\", \"high\"].", "example": "high"}}}

@@ -1,0 +1,1 @@
+{"description": "Stop a zone.", "fields": {"zone_id": {"description": "The zone to stop.", "example": 3}}}

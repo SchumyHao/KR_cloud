@@ -1,0 +1,1 @@
+{"description": "Create a new person group.", "fields": {"name": {"description": "Name of the group.", "example": "family"}}}

@@ -1,0 +1,1 @@
+{"description": "Set the power mode.", "fields": {"entity_id": {"description": "Name of the xiaomi miio entity.", "example": "switch.xiaomi_miio_device"}, "mode": {"description": "Power mode, valid values are 'normal' and 'green'.", "example": "green"}}}

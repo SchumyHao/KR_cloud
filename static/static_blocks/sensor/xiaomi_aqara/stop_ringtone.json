@@ -1,0 +1,1 @@
+{"description": "Stops a playing ringtone immediately.", "fields": {"gw_mac": {"description": "MAC address of the Xiaomi Aqara Gateway.", "example": "34ce00880088"}}}

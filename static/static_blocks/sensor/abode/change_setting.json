@@ -1,0 +1,1 @@
+{"description": "Change an Abode system setting.", "fields": {"setting": {"description": "Setting to change.", "example": "beeper_mute"}, "value": {"description": "Value of the setting.", "example": "1"}}}

@@ -1,0 +1,1 @@
+{"description": "Toggles a device.", "fields": {"entity_id": {"description": "Name(s) of entities to toggle.", "example": "remote.family_room"}}}

@@ -1,0 +1,21 @@
+        {
+            "input_data": [],
+            "protocol": "wifi",
+            "information": {
+                "image": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533531791993&di=4d473056f75f489e9774c96c3f9e99a5&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D3045023561%2C2402919987%26fm%3D214%26gp%3D0.jpg",
+                "vendor": {
+                    "image": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533531791993&di=4d473056f75f489e9774c96c3f9e99a5&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D3045023561%2C2402919987%26fm%3D214%26gp%3D0.jpg",
+                    "name": "vendorX"
+                },
+                "name": "X",
+                "model": "modelA",
+                "id": "1"
+            },
+            "purchase_link": {"taobao": "https://tshop.tmall.com/?spm=a21bo.2017.201862-1.d1.5af911d9iNByAG&pos=1&mm_gxbid=1_2403371_b1c6ccd7a2273113da90776674700437&acm=20140506001.1003.2.3885235&scm=1003.2.20140506001.OTHER_1535185547761_3885235"},
+            "class": "sensor",
+            "output_data": [{
+                "data": [40],
+                "name": "temperature",
+                "data_type": ["num"]
+            }]
+        }

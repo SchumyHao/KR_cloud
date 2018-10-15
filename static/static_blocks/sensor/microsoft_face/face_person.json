@@ -1,0 +1,1 @@
+{"description": "Add a new picture to a person.", "fields": {"person": {"description": "Name of the person.", "example": "Hans"}, "group": {"description": "Name of the group.", "example": "family"}, "camera_entity": {"description": "Camera to take a picture.", "example": "camera.door"}}}

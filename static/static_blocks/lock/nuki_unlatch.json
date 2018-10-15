@@ -1,0 +1,1 @@
+{"description": "Nuki unlatch.", "fields": {"entity_id": {"description": "Entity id of the Nuki lock.", "example": "lock.front_door"}}}

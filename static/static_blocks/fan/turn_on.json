@@ -1,0 +1,1 @@
+{"description": "Turns fan on.", "fields": {"entity_id": {"description": "Names(s) of the entities to turn on", "example": "fan.living_room"}, "speed": {"description": "Speed setting", "example": "high"}}}

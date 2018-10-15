@@ -1,0 +1,1 @@
+{"description": "Set the name of a node.", "fields": {"entity_id": {"description": "Name(s) of homematic central to set value.", "example": "homematic.ccu2"}, "name": {"description": "Name of the variable to set.", "example": "testvariable"}, "value": {"description": "New value", "example": 1}}}

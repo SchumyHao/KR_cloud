@@ -1,0 +1,1 @@
+{"description": "Turns feedback sounds off.", "fields": {"site_id": {"description": "Site to turn sounds on, defaults to all sites (optional)", "example": "bedroom"}}}

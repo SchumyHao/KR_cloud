@@ -1,0 +1,1 @@
+{"description": "Remove/unpair device from Wink.", "fields": {"entity_id": {"description": "The entity_id of the device to delete."}}}

@@ -1,0 +1,1 @@
+{"description": "Turn off camera.", "fields": {"entity_id": {"description": "Entity id.", "example": "camera.living_room"}}}

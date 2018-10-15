@@ -1,0 +1,1 @@
+{"description": "Send the media player the command for previous track.", "fields": {"entity_id": {"description": "Name(s) of entities to send previous track command to.", "example": "media_player.living_room_sonos"}}}

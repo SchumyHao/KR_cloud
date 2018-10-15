@@ -1,0 +1,1 @@
+{"description": "Enable/disable the siren.", "fields": {"entity_id": {"description": "Name(s) of the entities to set", "example": "switch.dome_siren"}, "enabled": {"description": "True or False"}}}

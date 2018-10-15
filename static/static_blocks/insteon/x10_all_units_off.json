@@ -1,0 +1,1 @@
+{"description": "Send X10 All Units Off command", "fields": {"housecode": {"description": "X10 house code", "example": "c"}}}

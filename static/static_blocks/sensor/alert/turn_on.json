@@ -1,0 +1,1 @@
+{"description": "Reset alert's notifications.", "fields": {"entity_id": {"description": "Name of the alert to reset.", "example": "alert.garage_door_open"}}}

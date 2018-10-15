@@ -1,0 +1,1 @@
+{"description": "Refresh zwave node.", "fields": {"node_id": {"description": "ID of the node to refresh.", "example": 10}}}

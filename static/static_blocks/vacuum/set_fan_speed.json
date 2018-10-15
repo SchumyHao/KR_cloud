@@ -1,0 +1,1 @@
+{"description": "Set the fan speed of the vacuum cleaner.", "fields": {"entity_id": {"description": "Name of the vacuum entity.", "example": "vacuum.xiaomi_vacuum_cleaner"}, "fan_speed": {"description": "Platform dependent vacuum cleaner fan speed, with speed steps, like 'medium' or by percentage, between 0 and 100.", "example": "low"}}}

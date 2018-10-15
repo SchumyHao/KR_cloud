@@ -1,0 +1,1 @@
+{"description": "Remove a node from the ZigBee network.", "fields": {"ieee_address": {"description": "IEEE address of the node to remove", "example": "00:0d:6f:00:05:7d:2d:34"}}}

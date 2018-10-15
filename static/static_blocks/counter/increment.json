@@ -1,0 +1,1 @@
+{"description": "Increment a counter.", "fields": {"entity_id": {"description": "Entity id of the counter to increment.", "example": "counter.count0"}}}

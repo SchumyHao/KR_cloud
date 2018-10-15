@@ -1,0 +1,1 @@
+{"description": "Increment the value of an input number entity by its stepping.", "fields": {"entity_id": {"description": "Entity id of the input number the should be incremented.", "example": "input_number.threshold"}}}

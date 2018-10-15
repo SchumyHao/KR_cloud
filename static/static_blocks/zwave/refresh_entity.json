@@ -1,0 +1,1 @@
+{"description": "Refresh zwave entity.", "fields": {"entity_id": {"description": "Name of the entity to refresh.", "example": "light.leviton_vrmx11lz_multilevel_scene_switch_level_40"}}}

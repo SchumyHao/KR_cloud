@@ -1,0 +1,1 @@
+{"description": "Remove a user group.", "fields": {"object_id": {"description": "Group id and part of entity id.", "example": "test_group"}}}

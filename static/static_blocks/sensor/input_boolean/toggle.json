@@ -1,0 +1,1 @@
+{"description": "Toggles an input boolean.", "fields": {"entity_id": {"description": "Entity id of the input boolean to toggle.", "example": "input_boolean.notify_alerts"}}}

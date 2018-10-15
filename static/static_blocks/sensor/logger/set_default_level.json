@@ -1,0 +1,1 @@
+{"description": "Set the default log level for components.", "fields": {"level": {"description": "Default severity level. Possible values are notset, debug, info, warn, warning, error, fatal, critical", "example": "debug"}}}

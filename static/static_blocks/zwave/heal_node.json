@@ -1,0 +1,1 @@
+{"description": "Start a Z-Wave node heal. Refer to OZW.log for progress.", "fields": {"return_routes": null, "description": "Whether or not to update the return routes from the node to the controller. Defaults to False.", "example": true}}

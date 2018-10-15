@@ -1,0 +1,1 @@
+{"description": "Clear a usercode from lock.", "fields": {"node_id": {"description": "Node id of the lock.", "example": 18}, "code_slot": {"description": "Code slot to clear code from.", "example": 1}}}

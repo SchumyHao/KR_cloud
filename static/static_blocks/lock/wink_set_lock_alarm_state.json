@@ -1,0 +1,1 @@
+{"description": "Set alarm state.", "fields": {"entity_id": {"description": "Name of lock to unlock.", "example": "lock.front_door"}, "enabled": {"description": "enable or disable. true or false.", "example": true}}}

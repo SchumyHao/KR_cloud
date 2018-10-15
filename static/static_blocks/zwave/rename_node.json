@@ -1,0 +1,1 @@
+{"description": "Set the name of a node. This will also affect the IDs of all entities in the node.", "fields": {"node_id": {"description": "ID of the node to rename.", "example": 10}, "name": {"description": "New Name", "example": "kitchen"}}}

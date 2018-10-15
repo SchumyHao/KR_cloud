@@ -1,0 +1,21 @@
+{
+    "description": "Trigger when state change.",
+    "fields": {
+        "entity_id": {
+            "description": "Name(s) of entities to read.",
+            "example": "switch.living_room"
+        },
+        "name": {
+            "description": "State name.",
+            "example": "battery_level"
+        },
+        "from_value": {
+            "description": "Only trigger from this value to another.",
+            "example": 10
+        },
+        "to_value": {
+            "description": "Only trigger from another value to this.",
+            "example": 11
+        }
+    }
+}

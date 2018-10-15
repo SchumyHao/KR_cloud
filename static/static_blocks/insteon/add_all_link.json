@@ -1,0 +1,1 @@
+{"description": "Tells the Insteom Modem (IM) start All-Linking mode. Once the the IM is in All-Linking mode, press the link button on the device to complete All-Linking.", "fields": {"group": {"description": "All-Link group number.", "example": 1}, "mode": {"description": "Linking mode   controller - IM is controller   responder - IM is responder", "example": "controller"}}}

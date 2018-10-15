@@ -1,0 +1,1 @@
+{"description": "Increase or decrease volume of system.", "fields": {"up": {"description": "Increases volume x levels.", "example": 3}, "down": {"description": "Decreases volume x levels.", "example": 3}, "mute": {"description": "Mutes audio system. Value should be on, off or toggle.", "example": "toggle"}}}

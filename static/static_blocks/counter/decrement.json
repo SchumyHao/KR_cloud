@@ -1,0 +1,1 @@
+{"description": "Decrement a counter.", "fields": {"entity_id": {"description": "Entity id of the counter to decrement.", "example": "counter.count0"}}}

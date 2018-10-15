@@ -1,0 +1,1 @@
+{"description": "Send a TTS message to Snips.", "fields": {"text": {"description": "Text to say.", "example": "My name is snips"}, "site_id": {"description": "Site to use to start session, defaults to default (optional)", "example": "bedroom"}, "custom_data": {"description": "custom data that will be included with all messages in this session", "example": "user=UserName"}}}

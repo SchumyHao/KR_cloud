@@ -1,0 +1,1 @@
+{"description": "Update HassIO supervisor.", "fields": {"version": {"description": "Optional or it will be use the latest version.", "example": "0.3"}}}

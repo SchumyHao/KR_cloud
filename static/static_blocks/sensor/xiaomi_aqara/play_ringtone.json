@@ -1,0 +1,1 @@
+{"description": "Play a specific ringtone. The version of the gateway firmware must be 1.4.1_145 at least.", "fields": {"gw_mac": {"description": "MAC address of the Xiaomi Aqara Gateway.", "example": "34ce00880088"}, "ringtone_id": {"description": "One of the allowed ringtone ids.", "example": 8}, "ringtone_vol": {"description": "The volume in percent.", "example": 30}}}

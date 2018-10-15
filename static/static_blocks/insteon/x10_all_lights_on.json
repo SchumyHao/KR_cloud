@@ -1,0 +1,1 @@
+{"description": "Send X10 All Lights On command", "fields": {"housecode": {"description": "X10 house code", "example": "c"}}}

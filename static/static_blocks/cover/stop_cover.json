@@ -1,0 +1,1 @@
+{"description": "Stop all or specified cover.", "fields": {"entity_id": {"description": "Name(s) of cover(s) to stop.", "example": "cover.living_room"}}}

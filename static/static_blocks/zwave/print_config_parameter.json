@@ -1,0 +1,1 @@
+{"description": "Prints a Z-Wave node config parameter value to log.", "fields": {"node_id": {"description": "Node id of the device to print the parameter from (integer)."}, "parameter": {"description": "Parameter number to print (integer)."}}}

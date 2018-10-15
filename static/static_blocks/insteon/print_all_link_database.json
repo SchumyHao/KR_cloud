@@ -1,0 +1,1 @@
+{"description": "Print the All-Link Database for a device. Requires that the All-Link Database is loaded into memory.", "fields": {"entity_id": {"description": "Name of the device to print", "example": "light.1a2b3c"}}}

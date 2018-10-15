@@ -1,0 +1,1 @@
+{"description": "Delete a new person group.", "fields": {"name": {"description": "Name of the group.", "example": "family"}}}

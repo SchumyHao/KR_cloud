@@ -1,0 +1,1 @@
+{"description": "Write to a modbus coil.", "fields": {"unit": {"description": "Address of the modbus unit.", "example": 21}, "address": {"description": "Address of the register to read.", "example": 0}, "state": {"description": "State to write.", "example": false}}}

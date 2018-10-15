@@ -1,0 +1,1 @@
+{"description": "Rename the provided device.", "fields": {"entity_id": {"description": "The entity_id of the device to rename.", "example": "binary_sensor.front_door_opened"}, "name": {"description": "The name to change it to.", "example": "back_door"}}}

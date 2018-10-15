@@ -1,0 +1,1 @@
+{"description": "Close all or specified cover.", "fields": {"entity_id": {"description": "Name(s) of cover(s) to close.", "example": "cover.living_room"}}}

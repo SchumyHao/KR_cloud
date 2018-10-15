@@ -1,0 +1,1 @@
+{"description": "Open all or specified cover tilt.", "fields": {"entity_id": {"description": "Name(s) of cover(s) tilt to open.", "example": "cover.living_room"}}}

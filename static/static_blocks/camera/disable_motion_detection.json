@@ -1,0 +1,1 @@
+{"description": "Disable the motion detection in a camera.", "fields": {"entity_id": {"description": "Name(s) of entities to disable motion detection.", "example": "camera.living_room_camera"}}}

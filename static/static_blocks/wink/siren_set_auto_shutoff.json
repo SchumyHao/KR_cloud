@@ -1,0 +1,1 @@
+{"description": "How long to sound the siren before turning off.", "fields": {"entity_id": {"description": "Name(s) of the entities to set.", "example": "switch.dome_siren"}, "auto_shutoff": {"description": "The time in seconds to sound the siren. One of [None, -1, 30, 60, 120] (None and -1 are forever. Use None for gocontrol, and -1 for Dome)", "example": 60}}}

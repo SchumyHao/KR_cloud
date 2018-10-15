@@ -1,0 +1,1 @@
+{"description": "Set the power price.", "fields": {"entity_id": {"description": "Name of the xiaomi miio entity.", "example": "switch.xiaomi_miio_device"}, "mode": {"description": "Power price, between 0 and 999.", "example": 31}}}

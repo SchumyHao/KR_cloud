@@ -1,0 +1,1 @@
+{"description": "Adds an item to the shopping list.", "fields": {"name": {"description": "The name of the item to add.", "example": "Beer"}}}

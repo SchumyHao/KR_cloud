@@ -1,0 +1,1 @@
+{"description": "Add a new user key code.", "fields": {"entity_id": {"description": "Name of lock to unlock.", "example": "lock.front_door"}, "name": {"description": "name of the new key code.", "example": "Bob"}, "code": {"description": "new key code, length must match length of other codes. Default length is 4.", "example": 1234}}}

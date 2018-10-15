@@ -1,0 +1,1 @@
+{"description": "This command will remove a failed node from the network. The node should be on the controllers failed nodes list, otherwise this command will fail. Refer to OZW.log for progress.", "fields": {"node_id": {"description": "Node id of the device to remove (integer).", "example": 10}}}

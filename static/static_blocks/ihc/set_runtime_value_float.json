@@ -1,0 +1,1 @@
+{"description": "Set a float runtime value on the IHC controller", "fields": {"ihc_id": {"description": "The integer IHC resource id"}, "value": {"description": "The float value to set"}}}
