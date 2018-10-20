@@ -50,7 +50,7 @@ function create_mqtt_context(token){
 }
 
 function init_default_config(token){
-	var default_config = [['mqtt_hostname', 'gcloud.schumyhao.xyz'],
+	var default_config = [['mqtt_hostname', 'mqtt.jimus.io'],
 		['mqtt_port', 8083],
 		['mqtt_username', 'kr'],
 		['mqtt_password', 'KillRed666@@@'],
