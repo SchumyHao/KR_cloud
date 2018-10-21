@@ -97,7 +97,7 @@
 							<!--<h1 class="page-title">APP1</h1>-->
 						</div>
 						<ul class="breadcrumb">
-							<li><a href="#"><i class="fa fa-home"></i>首页</a></li>
+							<li><a href="index.jsp"><i class="fa fa-home"></i>首页</a></li>
 							<li class="active">APP编辑</li>
 						</ul>
 					</div>

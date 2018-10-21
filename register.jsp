@@ -43,24 +43,8 @@
 						</div>
 
 						<div class="form-group">
-							<label for="signin-email" class="control-label sr-only">邮箱</label>
-							<input type="text" class="form-control" name="username" id="signin-email" placeholder="请账号">
-						</div>
-						<div class="form-group">
 							<label for="signin-password" class="control-label sr-only">Password</label>
 							<input type="password" name = "userpassword" class="form-control" id="signin-password"  placeholder="请输入密码">
-						</div>
-						<div class="form-group">
-							<label for="signin-value" class="control-label sr-only">home账号</label>
-							<input type="text" class="form-control" name = "homeAssName" id="signin-name" placeholder="请输入用户hass账号">
-						</div>
-						<div class="form-group">
-							<label for="signin-value" class="control-label sr-only">home密码</label>
-							<input type="text" class="form-control" name = "homeAssPassword" id="signin-name" placeholder="请输入用户hass密码">
-						</div>
-						<div class="form-group">
-							<label for="signin-value" class="control-label sr-only">homeip</label>
-							<input type="text" class="form-control" name = "homeAssIP" id="signin-name" placeholder="请输入用户hassIP">
 						</div>
 						<button type="button" class="btn btn-primary btn-lg btn-block" id="btnRegister">注册</button>
 

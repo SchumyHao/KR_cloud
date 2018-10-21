@@ -90,7 +90,7 @@
 				<nav>
 					<ul class="nav" id="sidebar-nav-menu">
 						<li class="menu-group">Main</li>
-						<li><a href="apps.html"><i class="ti-apple"></i> <span class="title">全部应用</span> <!--<span class="badge">3</span>--></a></li>
+						<li><a href="index.jsp"><i class="ti-apple"></i> <span class="title">全部应用</span> <!--<span class="badge">3</span>--></a></li>
 					</ul>
 				</nav>
 			</div>
