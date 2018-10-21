@@ -90,8 +90,8 @@ function updateUserStates (devs) {
   }
 }
 
-function updateUserServices(devs) {
-  for (var i in devs) {
+function updateUserServices(services) {
+/*  for (var i in devs) {
     dev = devs[i]
     if (!dev.hasOwnProperty('entity_id')) {
       console.log(dev+'do not contains entity_id')
@@ -103,15 +103,19 @@ function updateUserServices(devs) {
       gUserServices[domain] = {}
     }
     gUserServices[domain]['valid'] = true
-  }
+  }*/
+  gUserServices = services
 }
 
 //called when a message arrives
 function onMessageArrived(message) {
   console.log("onMessageArrived:" + message.payloadString);
-  var hass_dev = JSON.parse(message.payloadString);
+  var hass_data = JSON.parse(message.payloadString);
+  var hass_dev = hass_data.states
+  var hass_services = hass_data.services
+
   updateUserStates(hass_dev)
-  updateUserServices(hass_dev)
+  updateUserServices(hass_services)
   //here, init..
   load_defalut_hass_standard_blocks(hass_dev);
   //Code.init();
@@ -129,7 +133,13 @@ function load_defalut_hass_standard_blocks(hass_dev) {
   //add trigger
   add_trigger_block();
   //add service
-  $.ajaxSettings.async = false;
+  if (Object.keys(gUserServices).length > 0 && $('#toolbox').find('#service_ctg_id').length <= 0) {
+    $('<category id="" name="" colour="16"></category>').attr('name', "Service").attr('id', 'service_ctg_id').appendTo($('#toolbox'));
+  }
+  for (key in gUserServices) {
+    add_service_block(gUserServices[key])
+  }
+/*  $.ajaxSettings.async = false;
   $.get("../../../../blocks/load_sql_blocks.action", {}, function serviceBlockReady(r, s) {
     if (Object.keys(r).length > 0 && $('#toolbox').find('#service_ctg_id').length <= 0) {
       $('<category id="" name="" colour="16"></category>').attr('name', "Service").attr('id', 'service_ctg_id').appendTo($('#toolbox'));
@@ -143,7 +153,7 @@ function load_defalut_hass_standard_blocks(hass_dev) {
     });
 
   });
-  $.ajaxSettings.async = true;
+  $.ajaxSettings.async = true;*/
   load_devs_for_app();
   Code.init();
 
