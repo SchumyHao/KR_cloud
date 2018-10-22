@@ -256,9 +256,30 @@ function add_trigger_block() {
       this.appendDummyInput().appendField(new Blockly.FieldTextInput('state'), 'stateName');
       this.appendDummyInput().appendField("value");
       this.appendDummyInput().appendField("from");
+      this.appendDummyInput().appendField(new Blockly.FieldDropdown(
+        [
+          ['＝', 'EQ'],
+          ['≠', 'NE'],
+          ['≥', 'GE'],
+          ['>', 'GT'],
+          ['≤', 'LE'],
+          ['<', 'LT']
+        ]),'old_val_opt');
       this.appendDummyInput().appendField(new Blockly.FieldTextInput('old'), 'from');
       this.appendDummyInput().appendField("to");
+      this.appendDummyInput().appendField(new Blockly.FieldDropdown(
+        [
+          ['＝', 'EQ'],
+          ['≠', 'NE'],
+          ['≥', 'GE'],
+          ['>', 'GT'],
+          ['≤', 'LE'],
+          ['<', 'LT']
+        ]),'new_val_opt');
       this.appendDummyInput().appendField(new Blockly.FieldTextInput('new'), 'to');
+      this.appendDummyInput().appendField(`last`);
+      this.appendDummyInput().appendField(new Blockly.FieldNumber('0', 0, 65535), 'last_s');
+      this.appendDummyInput().appendField(`s`);
       this.appendStatementInput('DO').appendField('do');
 
       this.setInputsInline(true);
@@ -272,28 +293,48 @@ function add_trigger_block() {
   Blockly.JavaScript['trigger_framework'] = function (block) {
     var value_entity_id = Blockly.JavaScript.valueToCode(block, 'entity_id', Blockly.JavaScript.ORDER_ATOMIC);
     var value_name = block.getFieldValue('stateName')
+    var value_from_opt = block.getFieldValue('old_val_opt')
     var value_from = block.getFieldValue('from')
+    var value_to_opt = block.getFieldValue('new_val_opt')
     var value_to = block.getFieldValue('to')
+    var last_s = block.getFieldValue('last_s')
     var StatementCode = Blockly.JavaScript.statementToCode(block, 'DO')
 
     if (value_from != null) {
-      if (!isNumber(value_from)) {
-        value_from = `'${value_from}', `
+      if (value_from_opt === 'EQ') {
+        if (!isNumber(value_from)) {
+          value_from = `'${value_from}', `
+        } else {
+          value_from = `${value_from}, `
+        }
       } else {
-        value_from = `${value_from}, `
+        if (!isNumber(value_from)) {
+          value_from = `{operator: '${value_from_opt}', value: '${value_from}'}, `
+        } else {
+          value_from = `{operator: '${value_from_opt}', value: ${value_from}}, `
+        }
       }
     }
 
     if (value_to != null) {
-      if (!isNumber(value_to)) {
-        value_to = `'${value_to}', `
+      if (value_to_opt === 'EQ') {
+        if (!isNumber(value_to)) {
+          value_to = `'${value_to}', `
+        } else {
+          value_to = `${value_to}, `
+        }
       } else {
-        value_to = `${value_to}, `
+        if (!isNumber(value_to)) {
+          value_to = `{operator: '${value_to_opt}', value: '${value_to}'}, `
+        } else {
+          value_to = `{operator: '${value_to_opt}', value: ${value_to}}, `
+        }
       }
     }
 
+    var last_ms = last_s*1000
     var code = `
-subscribedTrigger.push(state_trigger.subscribe('${value_entity_id}', '${value_name}', ${value_from}${value_to}() => {
+subscribedTrigger.push(state_trigger.subscribe('${value_entity_id}', '${value_name}', ${value_from}${value_to}${last_ms}, () => {
   ${StatementCode}
 }))`;
     // TODO: Change ORDER_NONE to the correct strength.
@@ -318,6 +359,7 @@ function add_read_state_block() {
       this.appendDummyInput().appendField(`device's`);
       this.appendDummyInput().appendField(new Blockly.FieldTextInput('state'), 'stateName');
       this.appendDummyInput().appendField("value");
+      this.appendValueInput("add_string");
       this.setInputsInline(true);
       this.setOutput(true, null);
       this.setColour(60);
@@ -415,41 +457,70 @@ console.log(splitPath);
 
 function add_service_block(service) {
   var ds = service.domain + "." + service.service;
+  var msgIndex = 1
+  var serviceFormatedJson = {
+    "type": `${ds}_formated`,
+    "message0": `${service.service}%1`,
+    "args0": [{"type":"input_dummy"}]
+  }
+  for (var key in service.fields) {
+    serviceFormatedJson[`message${msgIndex}`] = `${key} %1`
+    var type = "String";
+    if (Number.isInteger(service.fields[key].example)) {
+      type = "Number";
+    }
+    serviceFormatedJson[`args${msgIndex}`] = [{
+      "type": "input_value", 
+      "name": key,
+      "check": type
+    }]
+    msgIndex++
+  }
+  serviceFormatedJson["colour"] = 16
+  if (JSON.stringify(service.fields) === '{}') {
+    serviceFormatedJson[`message${msgIndex}`] = `data %1`
+    serviceFormatedJson[`args${msgIndex}`] = [{
+      "type": "input_value", 
+      "name": "service_data",
+      "check": "String"
+    }]
+    serviceFormatedJson["colour"] = 48
+  }
+  serviceFormatedJson["previousStatement"] = null
+  serviceFormatedJson["nextStatement"] = null
+  serviceFormatedJson["inputsInline"] = false
+  serviceFormatedJson["mutator"] = `${ds}_mutator`
+
+
+  Blockly.defineBlocksWithJsonArray([{
+    "type": `${ds}_raw`,
+    "message0": `${service.service}%1`,
+    "args0": [{"type":"input_dummy"}],
+    "message1": `service data %1`,
+    "args1": [{"type":"input_value", "name": "service_data", "check": "String"}],
+    "previousStatement": null,
+    "nextStatement": null,
+    "inputsInline": false,
+    "colour": 16
+  }])
+
+  var service_mixin = {
+    mutationToDom: () => {},
+    domToMutation: (xmlElement) => {}
+  }
+
+  Blockly.Extensions.registerMutator(`${ds}_mutator`,
+    service_mixin, null,
+    [`${ds}_raw`]);
+
   Blockly.Blocks[ds] = {
     init: function () {
-      this.appendDummyInput().appendField(service.service);
-      var thisbak = this;
-      $.each(service.fields, function (key, value) {
-        var type = "String";
-        if (Number.isInteger(value.example)) {
-          type = "Number";
-        }
-        thisbak.appendValueInput(key).setCheck(type).appendField(key);
-      });
-      this.setPreviousStatement(true, "null");
-      this.setNextStatement(true, "null");
-      this.setColour(16);
-      this.setTooltip("tooltip");
-      this.setHelpUrl("help url");
+      this.jsonInit(serviceFormatedJson);
     }
   };
-  //var content = '';
-  //$.each(service.fields, function(key, value){
-  //     var v = '\'\\\'\\\'\'';
-  //     if (Number.isInteger(value.example)){
-  //         v = 0;
-  //     }
-  //	 content += 'var value_'+ key +' = Blockly.JavaScript.valueToCode(block,\'' + key+'\', Blockly.JavaScript.ORDER_ATOMIC) || ' +v+';';
-  //});
-
-  //var trans = "function(block){ " +content+ " return \'null\'; };";
-  //console.log(trans);
-
-  //var trans = "function(block){ return \"123456\"; };";
-  //Blockly.JavaScript[service.service] = trans;
   Blockly.JavaScript[ds] = function (block) {
     var code = `service.call('${service.domain}', '${service.service}'`;
-    if (service.fields) {
+    if (JSON.stringify(service.fields) !== '{}') {
       var validItem = false
       var subCode = ''
       $.each(service.fields, function (key, value) {
@@ -471,8 +542,11 @@ function add_service_block(service) {
         code = code.substring(0, code.length - 1)
         code = code + "}";
       }
+    } else {
+      var service_data = Blockly.JavaScript.valueToCode(block, 'service_data', Blockly.JavaScript.ORDER_NONE)
+      code = code + `, ${service_data}`
     }
-    code = code + ")";
+    code = code + ")\n";
     return code;
   };
 
