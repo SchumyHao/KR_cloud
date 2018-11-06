@@ -211,6 +211,9 @@ function add_device_block_with_domain (domain, devices) {
     devList.push(devItem)
   }
 
+  if (Blockly.Blocks[domain]) {
+    return
+  }
 
   Blockly.Blocks[domain] = {
     init: function () {
@@ -247,9 +250,11 @@ function add_device_block () {
 }
 
 function add_trigger_block() {
+  if (Blockly.Blocks['trigger_framework']) {
+    return
+  }
   Blockly.Blocks['trigger_framework'] = {
     init: function () {
-
       this.appendDummyInput().appendField('If')
       this.appendValueInput("entity_id").setCheck("String");
       this.appendDummyInput().appendField(`device's`);
@@ -351,6 +356,9 @@ subscribedTrigger.push(state_trigger.subscribe('${value_entity_id}', '${value_na
 
 
 function add_read_state_block() {
+  if (Blockly.Blocks['read_state']) {
+    return
+  }
   // Read state block
   Blockly.Blocks['read_state'] = {
     init: function () {
@@ -383,6 +391,9 @@ function add_read_state_block() {
 }
 
 function add_read_state_compare_block() {
+  if (Blockly.Blocks['read_state_compare']) {
+    return
+  }
   // Read state block with compare
   Blockly.Blocks['read_state_compare'] = {
     init: function () {
@@ -462,6 +473,9 @@ function add_service_block(service) {
     "type": `${ds}_formated`,
     "message0": `${service.service}%1`,
     "args0": [{"type":"input_dummy"}]
+  }
+  if (Blockly.Blocks[ds]) {
+    return
   }
   for (var key in service.fields) {
     serviceFormatedJson[`message${msgIndex}`] = `${key} %1`
@@ -544,7 +558,9 @@ function add_service_block(service) {
       }
     } else {
       var service_data = Blockly.JavaScript.valueToCode(block, 'service_data', Blockly.JavaScript.ORDER_NONE)
-      code = code + `, ${service_data}`
+      service_data = service_data.substring(1, service_data.length-1)
+      service_data = JSON.parse(service_data)
+      code = code + `, ${JSON.stringify(service_data)}`
     }
     code = code + ")\n";
     return code;
