@@ -339,9 +339,9 @@ function add_trigger_block() {
 
     var last_ms = last_s*1000
     var code = `
-subscribedTrigger.push(state_trigger.subscribe('${value_entity_id}', '${value_name}', ${value_from}${value_to}${last_ms}, () => {
+await state_trigger.subscribe(APPID, '${value_entity_id}', '${value_name}', ${value_from}${value_to}${last_ms}, async () => {
   ${StatementCode}
-}))`;
+})`;
     // TODO: Change ORDER_NONE to the correct strength.
     // return [code, Blockly.JavaScript.ORDER_ATOMIC];
     return code
@@ -379,7 +379,7 @@ function add_read_state_block() {
     var value_entity_id = Blockly.JavaScript.valueToCode(block, 'entity_id', Blockly.JavaScript.ORDER_ATOMIC);
     var value_state_name = block.getFieldValue('stateName')
 
-    var code = `state.get('${value_entity_id}', '${value_state_name}')`;
+    var code = `await state.get('${value_entity_id}', '${value_state_name}')`;
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
   };
 
@@ -438,9 +438,9 @@ function add_read_state_compare_block() {
 
     var code =
 `
-if (state.get('${value_entity_id}', '${value_state_name}') ${operation2String[value_state_opt]} ${value_state_value}) {
+state.compare('${value_entity_id}', '${value_state_name}', ${operation2String[value_state_opt]}, ${value_state_value}), async () => {
   ${StatementCode}
-}
+})
 `;
     //return [code, Blockly.JavaScript.ORDER_ATOMIC];
     return code
@@ -533,7 +533,7 @@ function add_service_block(service) {
     }
   };
   Blockly.JavaScript[ds] = function (block) {
-    var code = `service.call('${service.domain}', '${service.service}'`;
+    var code = `await service.call('${service.domain}', '${service.service}'`;
     if (JSON.stringify(service.fields) !== '{}') {
       var validItem = false
       var subCode = ''
@@ -632,7 +632,7 @@ $("#saveButton").click(
 
 function sentMessageToMqtt() {
   $.post('../../../../application/sentMessageToLocal.action', {
-    "appid": splitPath,
+    "appid": `${splitPath}`,
     "code": trans2javascript()
   }, function (r, s) {
     console.log(token + "   " + r);
@@ -642,7 +642,7 @@ function sentMessageToMqtt() {
 //send suspend message
 function sentSuspendMessageToMqtt() {
   $.post('../../../../application/suspentMessageToLocal.action', {
-    "appid": splitPath,
+    "appid": `${splitPath}`,
     "code": trans2javascript()
   }, function (r, s) {
     send_by_mqtt(token, r);
@@ -749,7 +749,7 @@ function generate16bitstr() {
 
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
+    console.error("onConnectionLost:" + responseObject.errorMessage);
   }
   if (this.context != undefined) {
     this.context.set('conn', false);
