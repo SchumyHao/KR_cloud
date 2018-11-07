@@ -367,7 +367,6 @@ function add_read_state_block() {
       this.appendDummyInput().appendField(`device's`);
       this.appendDummyInput().appendField(new Blockly.FieldTextInput('state'), 'stateName');
       this.appendDummyInput().appendField("value");
-      this.appendValueInput("add_string");
       this.setInputsInline(true);
       this.setOutput(true, null);
       this.setColour(60);
@@ -438,7 +437,7 @@ function add_read_state_compare_block() {
 
     var code =
 `
-state.compare('${value_entity_id}', '${value_state_name}', ${operation2String[value_state_opt]}, ${value_state_value}), async () => {
+state.compare('${value_entity_id}', '${value_state_name}', '${value_state_opt}', ${value_state_value}, async () => {
   ${StatementCode}
 })
 `;
