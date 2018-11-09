@@ -437,7 +437,7 @@ function add_read_state_compare_block() {
 
     var code =
 `
-state.compare('${value_entity_id}', '${value_state_name}', '${value_state_opt}', ${value_state_value}, async () => {
+await state.compare('${value_entity_id}', '${value_state_name}', '${value_state_opt}', ${value_state_value}, async () => {
   ${StatementCode}
 })
 `;
