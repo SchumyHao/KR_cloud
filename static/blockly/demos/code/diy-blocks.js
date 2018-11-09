@@ -1,30 +1,7 @@
-//var g_hass_service = {};
-//var g_hass_dev = {};
-
-//gUserServices = {
-//  domainName: {
-//      componentName: {
-//          serviceName: {
-//              valid: true
-//          }
-//      }
-//  }
-//}
 var gUserServices = {}
-//gUserStates = {
-//    domainName: {
-//        deviceName: {
-//          states: []
-//          friendlyName: 
-//        }
-//    }
-//}
 var gUserStates = {}
-
-//init mqtt
 var token;
-//
-//connect to mqtt
+
 function connectToMqtt() {
   $.ajaxSettings.async = false;
   $.post('../../../../user/getToken.action', function (r, s) {
@@ -194,6 +171,13 @@ function isNumber(nubmer) {
   } else {
     return false
   }
+}
+
+function removeQuotationMark(string) {
+  if ((string[0] == `'`) || (string[0] == `"`)) {
+    return string.substring(1, string.length-1)
+  }
+  return string
 }
 
 function add_device_block_with_domain (domain, devices) {
@@ -533,35 +517,32 @@ function add_service_block(service) {
   };
   Blockly.JavaScript[ds] = function (block) {
     var code = `await service.call('${service.domain}', '${service.service}'`;
+
+    // Call service data must be json format
+    var serviceData = {}
     if (JSON.stringify(service.fields) !== '{}') {
-      var validItem = false
-      var subCode = ''
       $.each(service.fields, function (key, value) {
-        //console.log(key+","+value.description);
-        var c = Blockly.JavaScript.valueToCode(block, key, Blockly.JavaScript.ORDER_NONE);
-        //c = "\""+c+"\""
+        let c = Blockly.JavaScript.valueToCode(block, key, Blockly.JavaScript.ORDER_NONE);
+        // If c is not set, c will be "". It's weird
         if (c) {
-          validItem = true
-          subCode = subCode + `"${key}": `;
-          subCode = subCode.concat(`"${c}"`);
-          subCode = subCode + ",";
+          if (isNumber(c)) {
+            serviceData[key] = c
+          } else {
+            serviceData[key] = removeQuotationMark(c)
+          }
         }
       });
-      if (validItem) {
-        code = code + ", {"
-      }
-      code = code + subCode
-      if (validItem) {
-        code = code.substring(0, code.length - 1)
-        code = code + "}";
-      }
     } else {
-      var service_data = Blockly.JavaScript.valueToCode(block, 'service_data', Blockly.JavaScript.ORDER_NONE)
-      service_data = service_data.substring(1, service_data.length-1)
-      service_data = JSON.parse(service_data)
-      code = code + `, ${JSON.stringify(service_data)}`
+      // service.fields is {}, this is invalid Hass server config.
+      // Just read serviceData as json string
+      let d = Blockly.JavaScript.valueToCode(block, 'service_data', Blockly.JavaScript.ORDER_NONE)
+
+      d = removeQuotationMark(d)
+      serviceData = JSON.parse(d)
     }
-    code = code + ")\n";
+
+    var serviceDataString = JSON.stringify(serviceData)
+    code = `${code}, ${serviceDataString})\n`;
     return code;
   };
 
@@ -588,19 +569,6 @@ function saveblockly() {
   var xml_text = Blockly.Xml.domToPrettyText(xml_dom);
   return window.btoa(encodeURIComponent(xml_text));
 }
-//var workspace;
-
-//function rendering(){
-//	workspace = Blockly.inject('content_area',
-//		 {media: '../../media/',
-//			 toolbox: document.getElementById('toolbox')});
-//	
-//}
-
-//function generate_code(){
-//	var code = Blockly.JavaScript.workspaceToCode(workspace);
-//	alert(code);
-//}
 
 function load_devs_for_app() {
 
@@ -630,29 +598,25 @@ $("#saveButton").click(
 //sent code
 
 function sentMessageToMqtt() {
-  $.post('../../../../application/sentMessageToLocal.action', {
-    "appid": `${splitPath}`,
-    "code": trans2javascript()
-  }, function (r, s) {
-    console.log(token + "   " + r);
-    send_by_mqtt(token, r);
-  });
+  var msg = {}
+  msg["type"] = "callService"
+  msg["comContent"] = {}
+  msg["comContent"]["appid"] = parseInt(splitPath, 10)
+  msg["comContent"]["code"] = trans2javascript()
+  msg["comContent"]["status"] = "running"
+  send_by_mqtt(token, msg)
 }
+
 //send suspend message
 function sentSuspendMessageToMqtt() {
-  $.post('../../../../application/suspentMessageToLocal.action', {
-    "appid": `${splitPath}`,
-    "code": trans2javascript()
-  }, function (r, s) {
-    send_by_mqtt(token, r);
-  });
+  var msg = {}
+  msg["type"] = "callService"
+  msg["comContent"] = {}
+  msg["comContent"]["appid"] = parseInt(splitPath, 10)
+  msg["comContent"]["status"] = "suspend"
+  send_by_mqtt(token, msg)
 }
-//send device message
-function callDevice() {
-  $.post('../../../../blocks/load_device_blocks.action', function (r, s) {
-    send_by_mqtt(token, r);
-  });
-}
+
 $("#runButton").click(
   function save_devs_for_app(done) {
     sentMessageToMqtt();
@@ -668,8 +632,6 @@ $("#suspendButton").click(
 /*
  ***this is support for mqtt
  */
-//send_by_mqtt('ashj67as', 'hello world');
-
 function send_by_mqtt(token, message) {
   if (this.context == undefined) {
     this.context = create_mqtt_context(token, message);
