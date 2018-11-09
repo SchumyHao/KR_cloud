@@ -12,13 +12,13 @@ function apps_reload() {
 function apps_add_plus() {
     var code = '';
     code += '<li class="file-item">';
-    code += '	<a href="#" class="new-item">';
+    code += '	<a class="new-item">';
     code += '		<span class="file-preview pdf">';
     code += '         <i class="fa fa-plus"></i>';
     code += '		</span>';
     code += '	</a>';
     code += '	<div class="file-info">';
-    code += '		<a href="#">';
+    code += '		<a class="new-item">';
     code += '			<span class="file-name">点击+号创建新的APP</span>';
     code += '		</a>';
     code += '		<span class="file-author"></span>';
