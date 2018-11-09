@@ -14,7 +14,6 @@ connectToMqtt();
 
 
 function getDevices(token) {
-  console.log('getDevices')
   var devices = {
     "type": "getDevices",
     "comContent": ""
@@ -86,7 +85,7 @@ function updateUserServices(services) {
 
 //called when a message arrives
 function onMessageArrived(message) {
-  console.log("onMessageArrived:" + message.payloadString);
+  console.debug("onMessageArrived:" + message.payloadString);
   var hass_data = JSON.parse(message.payloadString);
   var hass_dev = hass_data.states
   var hass_services = hass_data.services
@@ -447,7 +446,6 @@ var locationPath = window.location;
 var path = locationPath.href;
 
 var splitPath = path.split("=")[1];
-console.log(splitPath);
 
 function add_service_block(service) {
   var ds = service.domain + "." + service.service;
@@ -575,7 +573,6 @@ function load_devs_for_app() {
   $.post('../../../../application/selectAppById.action', {
     "appid": splitPath
   }, function (r, s) {
-    console.log(r);
     recover_blockly(r);
   });
 }
@@ -604,7 +601,7 @@ function sentMessageToMqtt() {
   msg["comContent"]["appid"] = parseInt(splitPath, 10)
   msg["comContent"]["code"] = trans2javascript()
   msg["comContent"]["status"] = "running"
-  send_by_mqtt(token, msg)
+  send_by_mqtt(token, JSON.stringify(msg))
 }
 
 //send suspend message
@@ -614,7 +611,7 @@ function sentSuspendMessageToMqtt() {
   msg["comContent"] = {}
   msg["comContent"]["appid"] = parseInt(splitPath, 10)
   msg["comContent"]["status"] = "suspend"
-  send_by_mqtt(token, msg)
+  send_by_mqtt(token, JSON.stringify(msg))
 }
 
 $("#runButton").click(
