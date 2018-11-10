@@ -1,8 +1,26 @@
 var gUserServices = {}
 var gUserStates = {}
 var token;
+var locationPath = window.location;
+var path = locationPath.href;
+var splitPath = path.split("=")[1];
+var operation2String = {
+  'EQ': '==',
+  'NEQ': '!==',
+  'GTE': '>=',
+  'GT': '>',
+  'LSE': '<=',
+  'LS': '<'
+}
+var mqttMessageTimeoutMS = 3000
+var mqttMsgTimer
+var mqttGotStatesMsg
+var mqttGotServicesMsg
 
-function connectToMqtt() {
+getMQTTToken()
+connectMQTT()
+
+function getMQTTToken() {
   $.ajaxSettings.async = false;
   $.post('../../../../user/getToken.action', function (r, s) {
     token = r;
@@ -10,8 +28,12 @@ function connectToMqtt() {
   $.ajaxSettings.async = true;
 }
 
-connectToMqtt();
-
+function connectMQTT() {
+  // context store mqtt connection.
+  if (this.context == undefined) {
+    this.context = create_mqtt_context(token);
+  }
+}
 
 function getDevices(token) {
   var devices = {
@@ -67,100 +89,21 @@ function updateUserStates (devs) {
 }
 
 function updateUserServices(services) {
-/*  for (var i in devs) {
-    dev = devs[i]
-    if (!dev.hasOwnProperty('entity_id')) {
-      console.log(dev+'do not contains entity_id')
-      continue;
-    }
-    var a = dev['entity_id'].split('.')
-    var domain = a[0]
-    if (!gUserServices.hasOwnProperty(domain)) {
-      gUserServices[domain] = {}
-    }
-    gUserServices[domain]['valid'] = true
-  }*/
   gUserServices = services
 }
 
-//called when a message arrives
-function onMessageArrived(message) {
-  console.debug("onMessageArrived:" + message.payloadString);
-  var hass_data = JSON.parse(message.payloadString);
-  var hass_dev = hass_data.states
-  var hass_services = hass_data.services
-
-  updateUserStates(hass_dev)
-  updateUserServices(hass_services)
-  //here, init..
-  load_defalut_hass_standard_blocks(hass_dev);
-  //Code.init();
-}
-
-getDevices(token);
-
-//here, init..
-
 function load_defalut_hass_standard_blocks(hass_dev) {
-  //add devices
   add_device_block();
-  //add state
   add_state_blocks();
-  //add trigger
   add_trigger_block();
-  //add service
   if (Object.keys(gUserServices).length > 0 && $('#toolbox').find('#service_ctg_id').length <= 0) {
     $('<category id="" name="" colour="16"></category>').attr('name', "Service").attr('id', 'service_ctg_id').appendTo($('#toolbox'));
   }
   for (key in gUserServices) {
     add_service_block(gUserServices[key])
   }
-/*  $.ajaxSettings.async = false;
-  $.get("../../../../blocks/load_sql_blocks.action", {}, function serviceBlockReady(r, s) {
-    if (Object.keys(r).length > 0 && $('#toolbox').find('#service_ctg_id').length <= 0) {
-      $('<category id="" name="" colour="16"></category>').attr('name', "Service").attr('id', 'service_ctg_id').appendTo($('#toolbox'));
-    }
-    $.each(r, function (key, value) {
-      if (gUserServices.hasOwnProperty(value.domain)) {
-        if (gUserServices[value.domain].valid) {
-          add_service_block(value);
-        }
-      }
-    });
-
-  });
-  $.ajaxSettings.async = true;*/
   load_devs_for_app();
   Code.init();
-
-
-  //rendering blocks
-  //rendering();
-}
-
-
-
-//function load_devs_for_statics() {
-//	$.ajaxSettings.async = false;
-//	$.get("../../../../blocks/load_static_blocks.action", {},function serviceBlockReady(r,s){
-//		 //serviceBlock = r;
-//		 //console.log(typeof serviceBlock);
-//		 add_hass_service_blocks(r);
-//		 //Code.init;
-//
-//	});
-//	$.ajaxSettings.async = true;
-//}
-//
-//load_devs_for_statics();
-
-var operation2String = {
-  'EQ': '==',
-  'NEQ': '!==',
-  'GTE': '>=',
-  'GT': '>',
-  'LSE': '<=',
-  'LS': '<'
 }
 
 function isNumber(nubmer) {
@@ -336,8 +279,6 @@ await state_trigger.subscribe(APPID, '${value_entity_id}', '${value_name}', ${va
   $('#toolbox').find('#trigger_ctg_id').append(blk);
 }
 
-
-
 function add_read_state_block() {
   if (Blockly.Blocks['read_state']) {
     return
@@ -440,12 +381,6 @@ function add_state_blocks () {
   add_read_state_block()
   add_read_state_compare_block()
 }
-
-
-var locationPath = window.location;
-var path = locationPath.href;
-
-var splitPath = path.split("=")[1];
 
 function add_service_block(service) {
   var ds = service.domain + "." + service.service;
@@ -550,6 +485,7 @@ function add_service_block(service) {
   }
   $('#toolbox').find('#service_ctg_id').find('#service_ctg_id_' + service.domain).append(blk);
 }
+
 //recover block from database
 function recover_blockly(last_blockly) {
   var xml_text = decodeURIComponent(window.atob(last_blockly));
@@ -568,8 +504,10 @@ function saveblockly() {
   return window.btoa(encodeURIComponent(xml_text));
 }
 
-function load_devs_for_app() {
 
+
+
+function load_devs_for_app() {
   $.post('../../../../application/selectAppById.action', {
     "appid": splitPath
   }, function (r, s) {
@@ -577,78 +515,116 @@ function load_devs_for_app() {
   });
 }
 
-$("#saveButton").click(
-  function save_devs_for_app(done) {
-
-    $.post('../../../../application/savaContent.action', {
-      "appid": splitPath,
-      "content": saveblockly()
-    }, function (r, s) {
-      alert("保存成功");
-    });
-  }
-)
-
-//
-
-//sent message to mqtt
-//sent code
-
-function sentMessageToMqtt() {
-  var msg = {}
-  msg["type"] = "callService"
-  msg["comContent"] = {}
-  msg["comContent"]["appid"] = parseInt(splitPath, 10)
-  msg["comContent"]["code"] = trans2javascript()
-  msg["comContent"]["status"] = "running"
-  send_by_mqtt(token, JSON.stringify(msg))
-}
-
-//send suspend message
-function sentSuspendMessageToMqtt() {
-  var msg = {}
-  msg["type"] = "callService"
-  msg["comContent"] = {}
-  msg["comContent"]["appid"] = parseInt(splitPath, 10)
-  msg["comContent"]["status"] = "suspend"
-  send_by_mqtt(token, JSON.stringify(msg))
-}
-
-$("#runButton").click(
-  function save_devs_for_app(done) {
-    sentMessageToMqtt();
-  }
-)
-$("#suspendButton").click(
-  function save_devs_for_app(done) {
-    sentSuspendMessageToMqtt();
-  }
-)
-
-
 /*
  ***this is support for mqtt
  */
 function send_by_mqtt(token, message) {
-  if (this.context == undefined) {
-    this.context = create_mqtt_context(token, message);
-    this.context.get('client').connect(context.get('options'));
-  } else if (this.context.get('conn')) {
+  function send(context, topic, message) {
+    message = new Paho.MQTT.Message(message);
+    message.destinationName = "javascript" + topic;
+    context.get('client').send(message);
+  }
+
+  if (this.context.get('conn')) {
     send(this.context, this.context.get('topic'), message);
+  } else {
+    console.error('MQTT connection dose not established.')
   }
 }
 
-// called when a message arrives
+function create_mqtt_context(token) {
+  function onConnect() {
+    // set callback handlers
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+    // This topic is only for Legacy KR.
+    client.subscribe(`nodejs${token}`);
 
+    client.subscribe(`${token}/states`)
+    client.subscribe(`${token}/services`)
+    map.set('client', client);
+    map.set('conn', true);
+    this.context = map;
 
-function create_mqtt_context(token, message) {
+    // Read user's devices and services
+    getDevices(token)
+  }
+  function onConnectionLost(responseObject) {
+    if (responseObject.errorCode !== 0) {
+      console.error("onConnectionLost:" + responseObject.errorMessage);
+    }
+    if (this.context != undefined) {
+      this.context.set('conn', false);
+    }
+  }
+  function onMessageArrived(message) {
+    function handleMessageArrive() {
+      var hassDev
+      msgTimer = null
+      if (!mqttGotStatesMsg && (topic == `${token}/states`)) {
+        mqttGotStatesMsg = true
+        hassDev = JSON.parse(payloadString)
+        updateUserStates(hassDev)
+      } else if (!mqttGotServicesMsg && (topic == `${token}/services`)) {
+        mqttGotServicesMsg = true
+        updateUserServices(JSON.parse(payloadString))
+      } else if (!mqttGotStatesMsg && !mqttGotServicesMsg && (topic == `nodejs${token}`)) {
+        mqttGotStatesMsg = true
+        mqttGotServicesMsg = true
+        let hass_data = JSON.parse(message.payloadString)
+        hassDev = hass_data.states
+        updateUserStates(hassDev)
+        updateUserServices(hass_data.services)
+      } else {
+        console.error(`invalid message.`)
+        return
+      }
+
+      if (hassDev) {
+        load_defalut_hass_standard_blocks(hassDev);
+      }
+    }
+    var topic = message.destinationName
+    var retained = message.retained
+    var payloadString = message.payloadString
+    if (retained) {
+      // Handler retained message only wait non-retained message timeout.
+      msgTimer = setTimeout(handleMessageArrive, mqttMessageTimeoutMS)
+    } else {
+      if (msgTimer) {
+        console.log('Clear retained message handler')
+        clearTimeout(msgTimer)
+      }
+      handleMessageArrive()
+    }
+  }
+  //Generate 16bit string
+  function generate16bitstr() {
+    var str = "";
+    var arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  
+    for (var i = 0; i < 16; i++) {
+      var pos = Math.round(Math.random() * (arr.length - 1));
+      str += arr[pos];
+    }
+    return str;
+  }
+  function init_default_config(token) {
+    var default_config = [
+      ['mqtt_hostname', 'mqtt.jimus.io'],
+      ['mqtt_port', 8083],
+      ['mqtt_username', 'kr'],
+      ['mqtt_password', 'KillRed666@@@'],
+      ['trytimes', 3],
+      ['conn', false],
+      ['topic', token]
+    ];
+    return new Map(default_config);
+  }
+
   var map = init_default_config(token);
   map.set('mqtt_client_id', generate16bitstr());
   var client = new Paho.MQTT.Client(map.get('mqtt_hostname'), map.get('mqtt_port'), map.get('mqtt_client_id'));
-  // set callback handlers
-  client.onConnectionLost = onConnectionLost;
-  client.onMessageArrived = onMessageArrived;
-  map.set('client', client);
   var options = {
     invocationContext: {
       host: map.get('mqtt_hostname'),
@@ -662,60 +638,46 @@ function create_mqtt_context(token, message) {
     //reconnect: true,
     onSuccess: onConnect,
     onFailure: onConnectionLost,
-    mqttVersion: 4
+    mqttVersion: 4,
+    //set password
+    userName: map.get('mqtt_username'),
+    password: map.get('mqtt_password'),
   };
-  //set password
-  options.userName = map.get('mqtt_username');
-  options.password = map.get('mqtt_password');
   map.set('options', options);
-  //subscribe
-  function onConnect() {
-    map.set('client', client);
-    map.set('conn', true);
-    var topic = map.get('topic');
-    map.get('client').subscribe("nodejs" + topic);
-    this.context = map;
-    send(this.context, topic, message);
-  }
+  client.connect(options);
   return map;
 }
 
-function init_default_config(token) {
-  var default_config = [
-    ['mqtt_hostname', 'mqtt.jimus.io'],
-    ['mqtt_port', 8083],
-    ['mqtt_username', 'kr'],
-    ['mqtt_password', 'KillRed666@@@'],
-    ['trytimes', 3],
-    ['conn', false],
-    ['topic', token]
-  ];
-  return new Map(default_config);
-}
 
-//Generate 16bit string
-function generate16bitstr() {
-  var str = "";
-  var arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
-  for (var i = 0; i < 16; i++) {
-    var pos = Math.round(Math.random() * (arr.length - 1));
-    str += arr[pos];
+// Button handlers
+$("#saveButton").click(
+  function save_devs_for_app(done) {
+    $.post('../../../../application/savaContent.action', {
+      "appid": splitPath,
+      "content": saveblockly()
+    }, function (r, s) {
+      alert("保存成功");
+    });
   }
-  return str;
-}
-
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-    console.error("onConnectionLost:" + responseObject.errorMessage);
+)
+$("#runButton").click(
+  function save_devs_for_app(done) {
+    var msg = {}
+    msg["type"] = "callService"
+    msg["comContent"] = {}
+    msg["comContent"]["appid"] = parseInt(splitPath, 10)
+    msg["comContent"]["code"] = trans2javascript()
+    msg["comContent"]["status"] = "running"
+    send_by_mqtt(token, JSON.stringify(msg))
   }
-  if (this.context != undefined) {
-    this.context.set('conn', false);
+)
+$("#suspendButton").click(
+  function save_devs_for_app(done) {
+    var msg = {}
+    msg["type"] = "callService"
+    msg["comContent"] = {}
+    msg["comContent"]["appid"] = parseInt(splitPath, 10)
+    msg["comContent"]["status"] = "suspend"
+    send_by_mqtt(token, JSON.stringify(msg))
   }
-}
-
-function send(context, topic, message) {
-  message = new Paho.MQTT.Message(message);
-  message.destinationName = "javascript" + topic;
-  context.get('client').send(message);
-}
+)
